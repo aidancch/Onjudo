@@ -2,7 +2,6 @@ from RealEstateAgent import RealEstateAgent
 from ResponseAnalyzer import ResponseAnalyzer
 from harvest import homeharvester
 import json
-import time
 
 class Manager():
     def __init__(self):
@@ -45,14 +44,13 @@ class Manager():
         
     def get_response(self, message):
         #this should only be one message from the user at a time.
-        self.start_time = time.perf_counter()
         self.agent.get_response(message)
         prompts = self.agent.get_prompts()
+        response = prompts[-1]
         self.analyzer.add_user_prompts(prompts)
         data = self.analyzer.get_response()
         self.process_json(data)
-        self.elapsed_time = time.perf_counter() - self.start_time
-        return self.harvest_request()
+        return response, self.harvest_request()
         
     def process_json(self, data):
         data = json.loads(data)
@@ -74,5 +72,7 @@ class Manager():
     
 if __name__ == '__main__':
     manage = Manager()
-    data = manage.get_response('Hi Im trying to find a condo in the San Jose area with a 10 mile radius. I want between 0 and 2000 square feet. I want the price to be between 0 and 1 million dollars')
+    response, data = manage.get_response('Hi Im trying to find a condo in the San Jose area with a 10 mile radius. I want between 0 and 2000 square feet. I want the price to be between 0 and 1 million dollars')
     data = json.loads(data)
+    print(response)
+    print(data[1]['property_url'])
