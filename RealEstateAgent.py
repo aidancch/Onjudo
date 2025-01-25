@@ -35,5 +35,6 @@ class RealEstateAgent:
             self.prompt.append({'role': 'assistant', 'content': response})
         return self.prompt
     
-bot = RealEstateAgent()
-bot.start_prompting()
+if __name__ == "__main__":
+    bot = RealEstateAgent()
+    bot.start_prompting()
