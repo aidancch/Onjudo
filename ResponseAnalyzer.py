@@ -4,29 +4,34 @@ class ResponseAnalyzer:
     cohere_api_key = "nz6fdh3FyK7sgrA25T17uyLTu33KNl16azQskw31"
     co = cohere.ClientV2(api_key=cohere_api_key)
     def __init__(self):
-        self.prompt = [
-                {"role": "system", "content": '''tell me what data you need'''}
-            ]
+        self.prompt = None
+        self.user_responses = {}
+        with open('analyzer_prompt.txt') as f:
+            self.prompt = [
+                    {"role": "system", "content": ''.join(f.readlines())},
+                ]
 
     # Initialize the Cohere API client
-    def get_response(self, message):
-        self.prompt.append({'role': 'user', 'content': message})
-        model = self.co.chat_stream(
+    def get_response(self):
+        message = self.prompt[:]
+        message.append(self.user_responses)
+        print(message)
+        model = self.co.chat(
             model="command-r-plus-08-2024",
-            temperature=0.5,
-            messages=self.prompt,
+            temperature=0,
+            messages=message,
         )
-        return model
+        return model.message.content[0].text
     
+    def add_user_prompts(self, prompts):
+        user_prompts = ''
+        for dictionary in prompts:
+            if dictionary['role'] == 'user':
+                user_prompts += dictionary['content']
+        
+        self.user_responses = {'role': 'user', 'content': user_prompts}
     
-    '''
-    location OR location estimate (midpoint, radius) (e.g. SF, radius=100mi)
-    listing_type
-    past_days
-    price range
-    property_type: single_family, multi_family, condos, condo_townhome_rowhome_coop, condo_townhome, townhomes, duplex_triplex, farm, land, mobile
-    
-    i want a dictionary output, with each of those above
-    e.g.
-    return {"location": ("San Francisco, CA", 20), "listing_type": "for_sale", "past_days": 30 , "property_type": "multi_family"}
-    '''
+if __name__ == '__main__':
+    info_extractor = ResponseAnalyzer()
+    info_extractor.add_user_prompts([{'role': 'user', 'content': 'Im looking for a condo in san Jose in about a 10 mile radius.'}])
+    print(info_extractor.get_response())
