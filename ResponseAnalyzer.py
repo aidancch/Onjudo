@@ -15,7 +15,6 @@ class ResponseAnalyzer:
     def get_response(self):
         message = self.prompt[:]
         message.append(self.user_responses)
-        print(message)
         model = self.co.chat(
             model="command-r-plus-08-2024",
             temperature=0,

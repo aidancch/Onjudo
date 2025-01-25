@@ -13,28 +13,13 @@ class RealEstateAgent:
     # Initialize the Cohere API client
     def get_response(self, message):
         self.prompt.append({'role': 'user', 'content': message})
-        model = self.co.chat_stream(
+        model = self.co.chat(
             model="command-r-plus-08-2024",
             temperature=0.5,
             messages=self.prompt,
         )
-        return model
-
-    def start_prompting(self):
-        user_input = ''
-        print(f'''Hi, I'm {self.name}, your dedicated real estate expert. I'm here to help you find the perfect property. With a deep understanding of the market and a passion for making the process as smooth as possible, I'm committed to ensuring your real estate journey is seamless and stress-free. What are you looking for in your dream home?''')
-        while user_input != 'Q':
-            user_input = input()
-            if user_input == 'Q':
-                return self.prompt
-            model = self.get_response(user_input)
-            response = ''
-            for event in model:
-                if event.type == "content-delta":
-                    response += event.delta.message.content.text
-                    print(event.delta.message.content.text, end="")
-            self.prompt.append({'role': 'assistant', 'content': response})
-        return self.prompt
+        response = model.message.content[0].text
+        self.prompt.append({'role': 'assistant', 'content': response})
     
     def get_prompts(self):
         return self.prompt
