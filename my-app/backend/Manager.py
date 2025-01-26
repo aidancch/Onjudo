@@ -2,6 +2,7 @@ from RealEstateAgent import RealEstateAgent
 from ResponseAnalyzer import ResponseAnalyzer
 from harvest import homeharvester
 import json
+import re
 import pandas
 
 class Manager():
@@ -103,14 +104,38 @@ class Manager():
                 baths.append(str(float(half_bath) * 0.5))
             else:
                 baths.append('unknown')
+                
+                    
+        phone_numbers = []        
+        for number in df['agent_phones'].tolist():
+            if type(number) == pandas._libs.missing.NAType:
+                phone_numbers.append('N/A')
+            else:
+                number = number[1]['number']
+                phone_numbers.append(self.pretty_number(number))
+    
 
-        df = df.drop(['city', 'state', 'zip_code', 'half_baths', 'full_baths', 'list_price'], axis=1)
+        df = df.drop(['city', 'state', 'zip_code', 'half_baths', 'full_baths', 'list_price', 'agent_phones'], axis=1)
         df['address'] = addresses
         df['baths'] = baths
         df['list_price'] = prices
+        df['agent_phones'] = phone_numbers
         data = df.to_json(orient='records')
         data = json.loads(data)
         return data
+    
+    def pretty_number(self, phone):
+        digits = re.sub(r'\D', '', phone)
+    
+        # Check if the input is already formatted correctly
+        if re.match(r'^\(\d{3}\)\s\d{3}-\d{4}$', phone):
+            return phone
+        
+        # Check if we have the correct number of digits
+        if len(digits) == 10:
+            return f"({digits[:3]}) {digits[3:6]}-{digits[6:]}"
+        else:
+            return "N/A"
     
     def comma_adder(self, s):
         s = str(s)
