@@ -16,8 +16,8 @@ class Manager():
         self.type = ''
         self.beds = ''
         self.baths = ''
-        self.sqft = ''
-        self.price = ''
+        self.sqft = [0, float('inf')]
+        self.price = [0, float('inf')]
         self.criteria = (
                         "list_price",
                         "full_street_line",
@@ -67,7 +67,7 @@ class Manager():
         self.type = data['propertyType']
         self.beds = data['beds']
         self.baths = data['baths']
-        self.sqft = data['radius']
+        self.sqft = data['size']
         self.price = data['price']     
 
         
@@ -75,14 +75,21 @@ class Manager():
         scraper = homeharvester()
         df = scraper.get_houses(self.location, self.radius)
         df.fillna(" ")
+
+        if self.sqft:
+            in_range_mask1 = (self.sqft[0] <= df['sqft']) & (df['sqft'] <= self.sqft[1])
+            df = df[in_range_mask1]
+
+        if self.price:
+            in_range_mask2 = (self.price[0] <= df['list_price']) & (df['list_price'] <= self.price[1])
+            df = df[in_range_mask2]
+
+        
+
         for i in df.columns:
             if i not in self.criteria:
                 df = df.drop(i, axis=1)
-                
-        for index, value in enumerate(zip(df['list_price'], df['sqft'])):
-            price, size = value
-            if price <= self.price[0] or price >= self.price[1] or size <= self.sqft[0] or size >= self.sqft[1]:
-                df.drop(index)
+
         
         addresses = []
         for street, city, state, zip_cope in zip(df['full_street_line'].tolist(), df['city'].tolist(), df['state'].tolist(), df['zip_code'].tolist()):
@@ -113,10 +120,10 @@ class Manager():
                     
         phone_numbers = []        
         for number in df['agent_phones'].tolist():
-            if type(number) == pandas._libs.missing.NAType:
+            if type(number) == pandas._libs.missing.NAType or number is None or "None" in number:
                 phone_numbers.append('N/A')
             else:
-                number = number[1]['number']
+                number = number[0]['number']
                 phone_numbers.append(self.pretty_number(number))
     
 
@@ -130,6 +137,7 @@ class Manager():
         return data
     
     def pretty_number(self, phone):
+        if not phone: return "N/A"
         digits = re.sub(r'\D', '', phone)
     
         # Check if the input is already formatted correctly
@@ -160,8 +168,11 @@ class Manager():
     
 if __name__ == '__main__':
     manage = Manager()
-    response = manage.get_response('Hi Im trying to find a condo in the San Jose area with a 10 mile radius. I want between 0 and 2000 square feet. I want the price to be between 0 and 1 million dollars')
+    response = manage.get_response('Give me houses that are 1 mil to 3 mil in irvine')
     print(response)
+    print(manage.price)
+    print(manage.sqft)
     data = manage.get_data()
-    for i in data:
-        print(i['address'])
+    # print(data)
+    # for i in data:
+    #     print(i['list_price'])

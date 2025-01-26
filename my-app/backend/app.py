@@ -1,4 +1,5 @@
 import Manager
+import initial
 
 from flask import Flask
 from flask_socketio import SocketIO
@@ -26,6 +27,8 @@ SCHOOLS = [
 ]
 AGENT_NAMES = ["John Smith", "Sarah Johnson", "Michael Brown", "Emily Davis"]
 OFFICE_NAMES = ["Luxury Realty", "Premier Properties", "Elite Estates", "Golden Gate Realty"]
+
+manager = Manager.Manager()
 
 def generate_random_properties(count=10):
     properties = []
@@ -62,7 +65,8 @@ def generate_random_properties(count=10):
     return properties
 
 chat_history = []
-current_listings = generate_random_properties(12)  # Generate 12 properties
+# current_listings = generate_random_properties(12)  # Generate 12 properties
+current_listings = initial.initial_list
 
 @socketio.on('connect')
 def handle_connect():
@@ -87,7 +91,6 @@ def handle_disconnect():
 
 @socketio.on('user_message')
 def handle_message(data):
-    print(f"Received message: {data}")
     try:
         user_msg = data['message']
         print(f"Processing user message: {user_msg}")
@@ -98,8 +101,6 @@ def handle_message(data):
         })
         
         # Simulate AI response (replace with actual AI logic later)
-
-        manager = Manager.Manager()
 
         print("processing... ")
 
@@ -131,7 +132,9 @@ def handle_message(data):
         print(type(new_listings))
         
     except Exception as e:
-        print(f"Error processing message: {str(e)}")
+        import traceback, sys
+        print(f"Error processing message: {e!r}")
+        traceback.print_exc(file=sys.stdout)
         socketio.emit('error', {'message': 'Error processing your message'})
 
 if __name__ == '__main__':

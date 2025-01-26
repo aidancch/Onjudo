@@ -92,9 +92,7 @@ export function PropertyModal({ property, isOpen, onClose }: PropertyModalProps)
                   <div className="flex items-center gap-2">
                     <Phone className="h-4 w-4 text-muted-foreground" />
                     <div className="text-sm">
-                      {property.agent_phones.map((phone, index) => (
-                        <div key={index}>{phone}</div>
-                      ))}
+                      {property.agent_phones}
                     </div>
                   </div>
                 </div>
