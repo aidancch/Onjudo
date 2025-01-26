@@ -60,6 +60,7 @@ class Manager():
         return self.data
         
     def process_json(self, data):
+        print("Cohere data: " + data)
         data = json.loads(data)
         self.location = data['location']
         self.radius = data['radius']

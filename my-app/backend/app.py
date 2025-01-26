@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
-socketio = SocketIO(app, cors_allowed_origins="http://localhost:3000", logger=True, engineio_logger=True)
+socketio = SocketIO(app, cors_allowed_origins="http://localhost:3000", logger=False, engineio_logger=True)
 
 # Sample data for random generation
 STREET_NAMES = ["Oak", "Maple", "Pine", "Cedar", "Elm", "Willow", "Birch", "Spruce"]
@@ -113,7 +113,7 @@ def handle_message(data):
             'sender': 'assistant'
         })
         
-        print(f"Current chat history: {chat_history}")
+        # print(f"Current chat history: {chat_history}")
         
         # Emit the AI response
         socketio.emit('ai_response', {'message': ai_response['content']})
