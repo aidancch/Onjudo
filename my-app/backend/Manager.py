@@ -39,21 +39,19 @@ class Manager():
                         "primary_photo",
                         "latitude",
                         "longitude",
-                        "primary_photo"
+                        "primary_photo",
+                        "city",
+                        "state",
+                        "zip_code"
                     )
         
     def get_response(self, message):
         #this should only be one message from the user at a time.
         self.agent.get_response(message)
-        print("a")
         prompts = self.agent.get_prompts()
-        print("b")
         self.analyzer.add_user_prompts(prompts)
-        print("c")
         user_responses = self.analyzer.get_response()
-        print('d')
         self.process_json(user_responses)
-        print('e')
         return prompts[-1]
     
     def get_data(self):
