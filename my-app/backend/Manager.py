@@ -52,11 +52,11 @@ class Manager():
         self.agent.get_response(message)
         prompts = self.agent.get_prompts()
         self.analyzer.add_user_prompts(prompts)
-        user_responses = self.analyzer.get_response()
-        self.process_json(user_responses)
         return prompts[-1]
     
     def get_data(self):
+        user_responses = self.analyzer.get_response()
+        self.process_json(user_responses)
         self.data = self.harvest_request()
         return self.data
         
@@ -75,13 +75,29 @@ class Manager():
         scraper = homeharvester()
         df = scraper.get_houses(self.location, self.radius)
         df.fillna(" ")
-
+        
         if self.sqft:
-            in_range_mask1 = (self.sqft[0] <= df['sqft']) & (df['sqft'] <= self.sqft[1])
+            if type(self.sqft) == str or len(self.sqft) != 2 or self.sqft == '':
+                self.sqft = [0, float('inf')]
+            if self.sqft[0] == '' and self.sqft[1] == '':
+                self.sqft = [0, float('inf')]
+            elif self.sqft[1] == '':
+                self.sqft = [float(self.sqft[0]), float('inf')]    
+            elif self.sqft[0] == '':
+                self.sqft = [float('inf'), float(self.sqft[1])]    
+            in_range_mask1 = (float(self.sqft[0]) <= df['sqft']) & (df['sqft'] <= float(self.sqft[1]))
             df = df[in_range_mask1]
 
         if self.price:
-            in_range_mask2 = (self.price[0] <= df['list_price']) & (df['list_price'] <= self.price[1])
+            if type(self.price) == str or len(self.price) != 2 or self.price == '':
+                self.price = [0, float('inf')]
+            if self.price[0] == '' and self.price[1] == '':
+                self.price = [0, float('inf')]
+            elif self.price[1] == '':
+                self.price = [float(self.price[0]), float('inf')]
+            elif self.price[0] == '':
+                self.price = [float('inf'), float(self.price[1])]   
+            in_range_mask2 = (float(self.price[0]) <= df['list_price']) & (df['list_price'] <= float(self.price[1]))
             df = df[in_range_mask2]
 
         

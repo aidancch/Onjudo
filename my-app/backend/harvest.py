@@ -6,6 +6,9 @@ class homeharvester():
     self.x = 0
   
   def get_houses(self, location, radius):
+    print(location)
+    if type(location) != str:
+      location = location[-1]
     properties = scrape_property(
       location=location,
       radius=radius,

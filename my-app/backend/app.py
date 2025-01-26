@@ -76,7 +76,7 @@ def handle_connect():
         'listings': current_listings
     })
     chat_history.append({
-        'content': "Hi! I'm Onjudo, your real estate assistant. Whether you're buying, selling, or renting, I'm here to help. What can I do for you today?",
+        'content': "Hi! I'm Onjūdō, your real estate assistant. Whether you're buying, selling, or renting, I'm here to help. What can I do for you today?",
         'role': "assistant"
     })
     # Emit the AI response

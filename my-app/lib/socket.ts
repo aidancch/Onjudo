@@ -133,4 +133,3 @@ export interface Property {
   latitute: number
   longitute: number
 }
-
