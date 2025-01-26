@@ -45,10 +45,15 @@ class Manager():
     def get_response(self, message):
         #this should only be one message from the user at a time.
         self.agent.get_response(message)
+        print("a")
         prompts = self.agent.get_prompts()
+        print("b")
         self.analyzer.add_user_prompts(prompts)
+        print("c")
         data = self.analyzer.get_response()
+        print('d')
         self.process_json(data)
+        print('e')
         self.data = self.harvest_request()
         return prompts[-1]
     
@@ -56,7 +61,11 @@ class Manager():
         return self.data
         
     def process_json(self, data):
+
+        print(data)
         data = json.loads(data)
+        print
+
         self.location = data['location']
         self.radius = data['radius']
         self.type = data['propertyType']
@@ -64,6 +73,7 @@ class Manager():
         self.baths = data['baths']
         self.sqft = data['radius']
         self.price = data['price']     
+
         
     def harvest_request(self):
         scraper = homeharvester()
@@ -74,7 +84,7 @@ class Manager():
                 
         for i in df.iterrows():
             i['full_street_line'] = i['full_street_line'] + ' ' + i['city'] + ', ' + i['state'] + ' ' + i['zip_code']
-            i['list_price'] = self.comma_adder(i['list_price']) if i['list_price'] else i['list_price'] = 'unknown'
+            i['list_price'] = self.comma_adder(i['list_price']) if i['list_price'] else 'unknown'
             if i['full_baths'] and i['half_baths']:
                 i['full_baths'] = str(float(i['full_baths']) + float(i['half_baths']) * 0.5)
             elif i['full_baths']: 

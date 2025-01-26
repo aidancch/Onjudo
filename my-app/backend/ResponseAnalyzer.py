@@ -6,7 +6,7 @@ class ResponseAnalyzer:
     def __init__(self):
         self.prompt = None
         self.user_responses = {}
-        with open('analyzer_prompt.txt') as f:
+        with open('backend/analyzer_prompt.txt') as f:
             self.prompt = [
                     {"role": "system", "content": ''.join(f.readlines())},
                 ]

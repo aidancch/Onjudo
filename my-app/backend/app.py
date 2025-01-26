@@ -93,11 +93,10 @@ def handle_message(data):
         manager = Manager.Manager()
 
         print("processing... ")
-        res, new_listings = manager.get_response(user_msg)
+
+        ai_response = manager.get_response(user_msg)
 
         print("finished processing")
-
-        ai_response = f"{res}"
 
         chat_history.append({
             'content': ai_response,
@@ -114,11 +113,11 @@ def handle_message(data):
             'chat_history': chat_history
         })
 
-        socketio.emit('listings_update', {
-            'listings': new_listings
-        })
-        print("updated listings")
-        print(type(new_listings))
+        # socketio.emit('listings_update', {
+        #     'listings': new_listings
+        # })
+        # print("updated listings")
+        # print(type(new_listings))
         
     except Exception as e:
         print(f"Error processing message: {str(e)}")
