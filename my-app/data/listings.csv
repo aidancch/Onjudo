@@ -1,0 +1,7 @@
+id,price,beds,baths,sqft,address,description,image
+1,2000000,6,5,3254,"1528 Conejo Way","Luxurious modern estate with panoramic views. Features include a gourmet kitchen, home theater, and resort-style pool.","/placeholder.svg?height=200&width=400&text=Property1"
+2,3500000,4,2,1252,"102 Echo Dr","Beautiful house with a pool in the backyard","/placeholder.svg?height=200&width=400&text=Property2"
+3,1800000,3,2,1800,"789 Oak St","Charming cottage with a spacious garden and modern amenities","/placeholder.svg?height=200&width=400&text=Property3"
+4,2500000,5,4,2800,"456 Pine Ave","Elegant family home in a quiet neighborhood with excellent schools nearby","/placeholder.svg?height=200&width=400&text=Property4"
+5,4200000,7,6,4500,"321 Maple Rd","Stunning mansion with a private tennis court and breathtaking mountain views","/placeholder.svg?height=200&width=400&text=Property5"
+
