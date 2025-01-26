@@ -65,7 +65,14 @@ export function PropertyModal({ property, isOpen, onClose }: PropertyModalProps)
               </div>
 
           {/* Description */}
-          <div className="text-base leading-relaxed">{property.description}</div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Description</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm">{property.text || "No description provided."}</p>
+            </CardContent>
+          </Card>
 
           {/* Listing Details */}
           <Card>
