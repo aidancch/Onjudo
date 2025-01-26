@@ -138,7 +138,7 @@ export function PropertyModal({ property, isOpen, onClose }: PropertyModalProps)
               height="100%"
               frameBorder="0"
               style={{ border: 0 }}
-              src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDL5_jBjWBIOTmwU7Q1svntONKY9SHrV_w&q=${encodeURIComponent(
+              src={`https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(
                 property.address,
               )}`}
               allowFullScreen
@@ -152,7 +152,7 @@ export function PropertyModal({ property, isOpen, onClose }: PropertyModalProps)
             height="100%"
             frameBorder="0"
             style={{ border: 0 }}
-            src={`https://www.google.com/maps/embed/v1/search?key=AIzaSyDL5_jBjWBIOTmwU7Q1svntONKY9SHrV_w&zoom=12&q=schools+${encodeURIComponent(
+            src={`https://www.google.com/maps/embed/v1/search?key=YOUR_API_KEY&zoom=12&q=schools+${encodeURIComponent(
               property.address,
             )}`}
             allowFullScreen
