@@ -9,7 +9,7 @@ class Manager():
         self.agent = RealEstateAgent()
         self.analyzer = ResponseAnalyzer()
         self.wanted_columns = set()
-        self.location = None
+        self.location = ''
         self.radius = None
         self.type = None
         self.beds = None
