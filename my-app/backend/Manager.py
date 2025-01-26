@@ -5,6 +5,7 @@ import json
 
 class Manager():
     def __init__(self):
+        self.data = []
         self.agent = RealEstateAgent()
         self.analyzer = ResponseAnalyzer()
         self.wanted_columns = set()
@@ -22,7 +23,6 @@ class Manager():
                         "full_baths",
                         "half_baths",
                         "sqft",
-                        "address",
                         "text",
                         "property_url",
                         "status",
@@ -46,11 +46,14 @@ class Manager():
         #this should only be one message from the user at a time.
         self.agent.get_response(message)
         prompts = self.agent.get_prompts()
-        response = prompts[-1]
         self.analyzer.add_user_prompts(prompts)
         data = self.analyzer.get_response()
         self.process_json(data)
-        return response, self.harvest_request()
+        self.data = self.harvest_request()
+        return prompts[-1]
+    
+    def get_data(self):
+        return self.data
         
     def process_json(self, data):
         data = json.loads(data)
@@ -68,9 +71,40 @@ class Manager():
         for i in df.columns:
             if i not in self.criteria:
                 df = df.drop(i, axis=1)
+                
+        for i in df.iterrows():
+            i['full_street_line'] = i['full_street_line'] + ' ' + i['city'] + ', ' + i['state'] + ' ' + i['zip_code']
+            i['list_price'] = self.comma_adder(i['list_price']) if i['list_price'] else i['list_price'] = 'unknown'
+            if i['full_baths'] and i['half_baths']:
+                i['full_baths'] = str(float(i['full_baths']) + float(i['half_baths']) * 0.5)
+            elif i['full_baths']: 
+                i['full_baths'] = str(float(i['full_baths']))
+            elif i['full_baths']:
+                i['full_baths'] = str(float(i['half_baths']) * 0.5)
+            else:
+                i['full_baths'] = 'unknown'
+
+        df = df.drop(['city', 'state', 'zip_code', 'half_baths'], axis=1)
+        df.rename(columns={'full_street_line': 'address', 'full_baths': 'baths'}, inplace=True)
         data = df.to_json(orient='records')
         data = json.loads(data)
         return data
+    
+    def comma_adder(self, s):
+        s = str(s)
+        returns = ''
+        cnt = 0
+        for i in s[::-1]:
+            cnt += 1
+            returns += i
+            if cnt == 3:
+                cnt = 0
+                returns += ','
+        returns = returns[::-1]
+        if returns.startswith(','):
+            return returns[1:]
+        else:
+            return returns
     
 if __name__ == '__main__':
     manage = Manager()
