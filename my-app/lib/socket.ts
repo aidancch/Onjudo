@@ -110,7 +110,7 @@ class SocketService {
 export const socketService = SocketService.getInstance()
 
 export interface Property {
-  id: number
+  property_id: number
   list_price: number
   beds: number
   baths: number

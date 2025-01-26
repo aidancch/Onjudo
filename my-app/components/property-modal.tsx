@@ -46,7 +46,7 @@ export function PropertyModal({ property, isOpen, onClose }: PropertyModalProps)
 
           {/* Details */}
           <div className="flex gap-3 mt-2">
-            <div className="text-3xl font-bold">${property.price.toLocaleString()}</div>
+            <div className="text-3xl font-bold">${property.price}</div>
                 <div>
 
                 </div>

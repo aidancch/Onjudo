@@ -54,7 +54,7 @@ export function PropertyGrid() {
               />
             </div>
             <CardContent className="p-4 flex flex-col gap-2">
-              <h3 className="text-xl md:text-2xl font-bold">${property.list_price.toLocaleString()}</h3>
+              <h3 className="text-xl md:text-2xl font-bold">${property.price}</h3>
 
               <p className="text-sm md:text-base text-muted-foreground">{property.address}</p>
 
