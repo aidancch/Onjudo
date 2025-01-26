@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -13,6 +13,7 @@ export function ChatInterface() {
   const [input, setInput] = useState("")
   const [isConnected, setIsConnected] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const chatContentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const checkConnection = setInterval(() => {
@@ -24,6 +25,12 @@ export function ChatInterface() {
         console.log("Updating messages:", updatedMessages)
         setMessages(updatedMessages)
         setError(null)
+        // Scroll to bottom after messages update
+        setTimeout(() => {
+          if (chatContentRef.current) {
+            chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight
+          }
+        }, 1000)
       },
       () => {}, // We don't need listings updates in this component
     )
@@ -31,6 +38,11 @@ export function ChatInterface() {
     // Add event listener for AI responses
     socketService.onAIResponse((aiMessage) => {
       setMessages((prev) => [...prev, { content: aiMessage, sender: "assistant" }])
+      setTimeout(() => {
+        if (chatContentRef.current) {
+          chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight
+        }
+      }, 1000)
     })
 
     return () => {
@@ -56,17 +68,24 @@ export function ChatInterface() {
 
     socketService.sendMessage(input)
     setInput("")
+
+    // Scroll to bottom after sending a message
+    setTimeout(() => {
+      if (chatContentRef.current) {
+        chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight
+      }
+    }, 0)
   }
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col shadow-md">
       <CardHeader className="border-b p-4">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold">Property Assistant</h2>
           <div className={`h-2 w-2 rounded-full ${isConnected ? "bg-green-500" : "bg-red-500"}`} />
         </div>
       </CardHeader>
-      <CardContent className="flex-1 overflow-auto p-4 space-y-4">
+      <CardContent className="flex-1 overflow-auto p-4 space-y-4" ref={chatContentRef}>
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
             <span className="block sm:inline">{error}</span>
