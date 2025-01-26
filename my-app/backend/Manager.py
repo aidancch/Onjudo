@@ -10,12 +10,12 @@ class Manager():
         self.analyzer = ResponseAnalyzer()
         self.wanted_columns = set()
         self.location = ''
-        self.radius = None
-        self.type = None
-        self.beds = None
-        self.baths = None
-        self.sqft = None
-        self.price = None
+        self.radius = ''
+        self.type = ''
+        self.beds = ''
+        self.baths = ''
+        self.sqft = ''
+        self.price = ''
         self.criteria = (
                         "list_price",
                         "full_street_line",
