@@ -122,14 +122,13 @@ def handle_message(data):
             'chat_history': chat_history
         })
 
-        listings = manager.get_data()
-        print(listings)
+        new_listings = manager.get_data()
 
-        # socketio.emit('listings_update', {
-        #     'listings': new_listings
-        # })
-        # print("updated listings")
-        # print(type(new_listings))
+        socketio.emit('listings_update', {
+            'listings': new_listings
+        })
+        print("updated listings")
+        print(type(new_listings))
         
     except Exception as e:
         print(f"Error processing message: {str(e)}")

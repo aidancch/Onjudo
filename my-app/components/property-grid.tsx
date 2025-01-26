@@ -7,6 +7,12 @@ import { Bed, Bath, Maximize } from "lucide-react"
 import { socketService, type Property } from "@/lib/socket"
 import { PropertyModal } from "./property-modal"
 
+const truncateDescription = (description: string | null | undefined, maxLength = 200) => {
+  if (!description) return "" // Return an empty string if description is missing
+  if (description.length <= maxLength) return description
+  return description.slice(0, maxLength).trim() + "..."
+}
+
 export function PropertyGrid() {
   const [properties, setProperties] = useState<Property[]>([])
   const [isConnected, setIsConnected] = useState(false)
@@ -48,13 +54,13 @@ export function PropertyGrid() {
             <div className="relative h-48 md:h-40 lg:h-48">
               <Image
                 src={property.primary_photo || "/placeholder.svg"}
-                alt={`${property.full_street_line} property`}
+                alt={`${property.address} property`}
                 fill
                 className="object-cover"
               />
             </div>
             <CardContent className="p-4 flex flex-col gap-2">
-              <h3 className="text-xl md:text-2xl font-bold">${property.price}</h3>
+              <h3 className="text-xl md:text-2xl font-bold">${property.list_price}</h3>
 
               <p className="text-sm md:text-base text-muted-foreground">{property.address}</p>
 
@@ -69,11 +75,11 @@ export function PropertyGrid() {
                 </span>
                 <span className="flex items-center gap-1">
                   <Maximize className="h-4 w-4 shrink-0" />
-                  <span>{property.sqft.toLocaleString()} sqft</span>
+                  <span>{property.sqft} sqft</span>
                 </span>
               </div>
 
-              <p className="text-sm line-clamp-2 hidden md:block">{property.text}</p>
+              <p className="text-sm hidden md:block">{truncateDescription(property.text)}</p>
             </CardContent>
           </Card>
         ))}

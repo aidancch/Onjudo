@@ -46,7 +46,7 @@ export function PropertyModal({ property, isOpen, onClose }: PropertyModalProps)
 
           {/* Details */}
           <div className="flex gap-3 mt-2">
-            <div className="text-3xl font-bold">${property.price}</div>
+            <div className="text-3xl font-bold">${property.list_price}</div>
                 <div>
 
                 </div>
@@ -122,13 +122,7 @@ export function PropertyModal({ property, isOpen, onClose }: PropertyModalProps)
               <CardTitle>Nearby Schools</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-2">
-                {property.nearby_schools.map((school, index) => (
-                  <li key={index} className="text-sm">
-                    {school}
-                  </li>
-                ))}
-              </ul>
+              <p className="text-sm">{property.nearby_schools || "No nearby schools listed."}</p>
             </CardContent>
           </Card>
 
