@@ -50,22 +50,18 @@ class Manager():
         print("b")
         self.analyzer.add_user_prompts(prompts)
         print("c")
-        data = self.analyzer.get_response()
+        user_responses = self.analyzer.get_response()
         print('d')
-        self.process_json(data)
+        self.process_json(user_responses)
         print('e')
-        self.data = self.harvest_request()
         return prompts[-1]
     
     def get_data(self):
+        self.data = self.harvest_request()
         return self.data
         
     def process_json(self, data):
-
-        print(data)
         data = json.loads(data)
-        print
-
         self.location = data['location']
         self.radius = data['radius']
         self.type = data['propertyType']
@@ -83,6 +79,7 @@ class Manager():
                 df = df.drop(i, axis=1)
                 
         for i in df.iterrows():
+            print(i['full_street_line'])
             i['full_street_line'] = i['full_street_line'] + ' ' + i['city'] + ', ' + i['state'] + ' ' + i['zip_code']
             i['list_price'] = self.comma_adder(i['list_price']) if i['list_price'] else 'unknown'
             if i['full_baths'] and i['half_baths']:
@@ -118,6 +115,8 @@ class Manager():
     
 if __name__ == '__main__':
     manage = Manager()
-    response, data = manage.get_response('Hi Im trying to find a condo in the San Jose area with a 10 mile radius. I want between 0 and 2000 square feet. I want the price to be between 0 and 1 million dollars')
+    response = manage.get_response('Hi Im trying to find a condo in the San Jose area with a 10 mile radius. I want between 0 and 2000 square feet. I want the price to be between 0 and 1 million dollars')
+    print(response)
+    data = manage.get_data()
     for i in data:
-        print(i['property_url'])
+        print(i['address'])
