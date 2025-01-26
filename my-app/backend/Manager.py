@@ -90,11 +90,11 @@ class Manager():
         baths = []
         for full_bath, half_bath in zip(df['full_baths'], df['half_baths']):
             if full_bath and half_bath:
-                baths.append(str(float(i['full_baths']) + float(i['half_baths']) * 0.5))
+                baths.append(str(float(full_bath) + float(half_bath) * 0.5))
             elif full_bath:
-                baths.append(str(float(i['full_baths'])))
+                baths.append(str(float(full_bath)))
             elif half_bath:
-                baths.append(str(float(i['half_baths']) * 0.5))
+                baths.append(str(float(half_bath) * 0.5))
             else:
                 baths.append('unknown')
 
