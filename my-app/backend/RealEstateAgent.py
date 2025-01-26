@@ -8,7 +8,7 @@ class RealEstateAgent:
         self.name = 'Onjudo'
         self.prompt = [
                 {"role": "system", "content": f'''You are a knowledgeable and friendly real estate property searcher chatbot named {self.name}. Your role is to assist clients in buying or renting properties within the United States. You provide accurate, up-to-date information on property listings, market trends, and neighborhoods. You answer questions clearly and offer helpful advice to guide clients through every step of the real estate process but don't give too much information unless asked for it. Communicate in a polite, professional manner, ensuring clients feel supported and well-informed at all times. Please do not add unnessecary text formatting.'''},
-                {"role": "assistant", "content": f"Hi! I'm {self.name}, your real estate assistant. Whether you're buying, selling, or renting, I'm here to help. What can I do for you today?"}
+                {"role": "assistant", "content": f"Hi! I'm {self.name}, your real estate assistant. Whether you're buying or renting, I'm here to help find your ideal house. What can I do for you today?"}
             ]
 
     # Initialize the Cohere API client

@@ -77,22 +77,33 @@ class Manager():
         for i in df.columns:
             if i not in self.criteria:
                 df = df.drop(i, axis=1)
-                
-        for i in df.iterrows():
-            print(i['full_street_line'])
-            i['full_street_line'] = i['full_street_line'] + ' ' + i['city'] + ', ' + i['state'] + ' ' + i['zip_code']
-            i['list_price'] = self.comma_adder(i['list_price']) if i['list_price'] else 'unknown'
-            if i['full_baths'] and i['half_baths']:
-                i['full_baths'] = str(float(i['full_baths']) + float(i['half_baths']) * 0.5)
-            elif i['full_baths']: 
-                i['full_baths'] = str(float(i['full_baths']))
-            elif i['full_baths']:
-                i['full_baths'] = str(float(i['half_baths']) * 0.5)
+        
+        addresses = []
+        for street, city, state, zip_cope in zip(df['full_street_line'].tolist(), df['city'].tolist(), df['state'].tolist(), df['zip_code'].tolist()):
+            addresses.append(street + ' ' + city + ', ' + state + ' ' + zip_cope)
+            
+        prices = []
+        for price in df['list_price']:
+            if price:
+                prices.append(self.comma_adder(price))
             else:
-                i['full_baths'] = 'unknown'
+                price.append('unknown')
+                
+        baths = []
+        for full_bath, half_bath in zip(df['full_baths'], df['half_baths']):
+            if full_bath and half_bath:
+                baths.append(str(float(i['full_baths']) + float(i['half_baths']) * 0.5))
+            elif full_bath:
+                baths.append(str(float(i['full_baths'])))
+            elif half_bath:
+                baths.append(str(float(i['half_baths']) * 0.5))
+            else:
+                baths.append('unknown')
 
-        df = df.drop(['city', 'state', 'zip_code', 'half_baths'], axis=1)
-        df.rename(columns={'full_street_line': 'address', 'full_baths': 'baths'}, inplace=True)
+        df = df.drop(['city', 'state', 'zip_code', 'half_baths', 'full_baths', 'list_price'], axis=1)
+        df['address'] = addresses
+        df['baths'] = baths
+        df['list_price'] = prices
         data = df.to_json(orient='records')
         data = json.loads(data)
         return data
