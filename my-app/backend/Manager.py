@@ -13,7 +13,6 @@ class Manager():
         self.wanted_columns = set()
         self.location = ''
         self.radius = ''
-        self.type = ''
         self.beds = ''
         self.baths = ''
         self.sqft = [0, float('inf')]
@@ -64,7 +63,6 @@ class Manager():
         data = json.loads(data)
         self.location = data['location']
         self.radius = data['radius']
-        self.type = data['propertyType']
         self.beds = data['beds']
         self.baths = data['baths']
         self.sqft = data['size']
@@ -99,8 +97,6 @@ class Manager():
                 self.price = [float('inf'), float(self.price[1])]   
             in_range_mask2 = (float(self.price[0]) <= df['list_price']) & (df['list_price'] <= float(self.price[1]))
             df = df[in_range_mask2]
-
-        
 
         for i in df.columns:
             if i not in self.criteria:
@@ -148,6 +144,15 @@ class Manager():
         df['baths'] = baths
         df['list_price'] = prices
         df['agent_phones'] = phone_numbers
+        
+        if self.beds:
+            in_range_mask3 = (int(self.beds) == df['beds']) | (int(self.beds) - 1 == df['beds']) | (int(self.beds) + 1 == df['beds'])
+            df = df[in_range_mask3]
+            
+        if self.baths:
+            in_range_mask4 = (int(self.beds) == df['baths']) | (int(self.beds) - 1 == df['baths']) | (int(self.beds) + 1 == df['baths'])
+            df = df[in_range_mask4]
+        
         data = df.to_json(orient='records')
         data = json.loads(data)
         return data
