@@ -99,14 +99,14 @@ def handle_message(data):
         print("finished processing")
 
         chat_history.append({
-            'content': ai_response,
+            'content': ai_response['content'],
             'sender': 'assistant'
         })
         
         print(f"Current chat history: {chat_history}")
         
         # Emit the AI response
-        socketio.emit('ai_response', {'message': ai_response})
+        socketio.emit('ai_response', {'message': ai_response['content']})
         
         # Emit the updated chat history
         socketio.emit('chat_update', {
