@@ -68,11 +68,12 @@ class Manager():
         for i in df.columns:
             if i not in self.criteria:
                 df = df.drop(i, axis=1)
-        return df.to_json(orient='records')
+        data = df.to_json(orient='records')
+        data = json.loads(data)
+        return data
     
 if __name__ == '__main__':
     manage = Manager()
     response, data = manage.get_response('Hi Im trying to find a condo in the San Jose area with a 10 mile radius. I want between 0 and 2000 square feet. I want the price to be between 0 and 1 million dollars')
-    data = json.loads(data)
-    print(response)
-    print(data[1]['property_url'])
+    for i in data:
+        print(i['property_url'])
