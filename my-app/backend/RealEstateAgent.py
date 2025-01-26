@@ -2,7 +2,7 @@ import cohere
 
 # Set your Cohere API key and model name here
 class RealEstateAgent:
-    cohere_api_key = "nz6fdh3FyK7sgrA25T17uyLTu33KNl16azQskw31"
+    cohere_api_key = "YOUR_API_KEY"
     co = cohere.ClientV2(api_key=cohere_api_key)
     def __init__(self):
         self.name = 'Onjūdō'
