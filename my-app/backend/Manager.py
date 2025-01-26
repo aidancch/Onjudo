@@ -75,6 +75,18 @@ class Manager():
         for i in df.columns:
             if i not in self.criteria:
                 df = df.drop(i, axis=1)
+                
+        if self.price:
+            mask1 = df['list_price'] >= self.price[0]
+            mask2 = df['list_price'] <= self.price[1]
+            df = df[~mask1]
+            df = df[~mask2]
+            
+        if self.sqft:
+            mask1 = df['sqft'] >= self.sqft[0]
+            mask2 = df['sqft'] <= self.sqft[1]
+            df = df[~mask1]
+            df = df[~mask2]
         
         addresses = []
         for street, city, state, zip_cope in zip(df['full_street_line'].tolist(), df['city'].tolist(), df['state'].tolist(), df['zip_code'].tolist()):
