@@ -42,7 +42,7 @@ class Manager():
                         "primary_photo",
                         "city",
                         "state",
-                        "zip_code"
+                        "zip_code",
                     )
         
     def get_response(self, message):
