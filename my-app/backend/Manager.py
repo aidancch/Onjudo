@@ -2,6 +2,7 @@ from RealEstateAgent import RealEstateAgent
 from ResponseAnalyzer import ResponseAnalyzer
 from harvest import homeharvester
 import json
+import pandas
 
 class Manager():
     def __init__(self):
@@ -72,6 +73,7 @@ class Manager():
     def harvest_request(self):
         scraper = homeharvester()
         df = scraper.get_houses(self.location, self.radius)
+        df.fillna(" ")
         for i in df.columns:
             if i not in self.criteria:
                 df = df.drop(i, axis=1)
@@ -89,6 +91,10 @@ class Manager():
                 
         baths = []
         for full_bath, half_bath in zip(df['full_baths'], df['half_baths']):
+            if type(full_bath) == pandas._libs.missing.NAType:
+                full_bath = 0
+            if type(half_bath) == pandas._libs.missing.NAType:
+                half_bath = 0
             if full_bath and half_bath:
                 baths.append(str(float(full_bath) + float(half_bath) * 0.5))
             elif full_bath:

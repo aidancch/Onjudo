@@ -71,6 +71,15 @@ def handle_connect():
         'chat_history': chat_history,
         'listings': current_listings
     })
+    chat_history.append({
+        'content': "Hi! I'm Onjudo, your real estate assistant. Whether you're buying, selling, or renting, I'm here to help. What can I do for you today?",
+        'role': "assistant"
+    })
+    # Emit the AI response
+    socketio.emit('ai_response', {'message': chat_history[0]['content']})
+    socketio.emit('chat_update', {
+                'chat_history': chat_history
+            })
 
 @socketio.on('disconnect')
 def handle_disconnect():
@@ -112,6 +121,9 @@ def handle_message(data):
         socketio.emit('chat_update', {
             'chat_history': chat_history
         })
+
+        listings = manager.get_data()
+        print(listings)
 
         # socketio.emit('listings_update', {
         #     'listings': new_listings
