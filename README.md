@@ -2,7 +2,7 @@
 
 ## Overview
 
-Pass
+Onjūdō is a website that helps anyone easily find their dream homes. Users skip managing filters and search boxes by talking to our virtual real estate agent. All someone has to do is specify what they are looking for in a house, and Onjūdō will find it for you.
 
 ## Contributors
 
