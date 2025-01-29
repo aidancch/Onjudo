@@ -1,4 +1,4 @@
-# Onjudo
+# Onjūdō
 
 ## Overview
 
@@ -11,7 +11,7 @@ Pass
 
 ## Table of Contents
 
-- [Onjudo](#onjudo)
+- [Onjūdō](#onjudo)
   - [Overview](#overview)
   - [Contributors](#contributors)
   - [Table of Contents](#table-of-contents)
