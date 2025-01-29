@@ -11,7 +11,7 @@ Pass
 
 ## Table of Contents
 
-- [Onjūdō](#onjudo)
+- [Onjūdō](#onjūdō)
   - [Overview](#overview)
   - [Contributors](#contributors)
   - [Table of Contents](#table-of-contents)
