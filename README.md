@@ -1,6 +1,6 @@
 # Onjūdō
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![Onjudo Header Logo](https://github.com/aidancch/Onjudo/onjudo_header_logo.png)
 
 ## Overview
 
