@@ -1,7 +1,7 @@
 # Onjūdō: Your AI Real Estate Agent
 
 ![Onjudo Header Logo](https://github.com/aidancch/Onjudo/blob/main/onjudo_header_logo.png)
-![Onjudo Pages_View](https://github.com/aidancch/Onjudo/blob/main/onjudo_pages_view.png)
+![Onjudo Pages_List](https://github.com/aidancch/Onjudo/blob/main/onjudo_pages_list.png)
 
 ## Overview
 
