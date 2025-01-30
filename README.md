@@ -1,5 +1,7 @@
 # Onjūdō
 
+![Alt text]([https://example.com/path/to/image.png](https://media.istockphoto.com/id/2149088667/photo/3d-rendering-of-modern-house-in-luxurious-style-in-night.jpg?s=612x612&w=0&k=20&c=GLKFpasm9kc8CgVZMh5oZB3oF5cYUC9fP8810sOJ5XQ=))
+
 ## Overview
 
 Onjūdō is a website that helps people easily find their dream homes. Users can skip managing filters and search boxes by talking to our virtual real estate agent. All they have to do is specify what they are looking for in a house, and Onjūdō will find it for them. Currently, Onjūdō can handle location, size, price, the number of beds, and the number of baths. Onjūdō is also able to give recommendations for where to look for houses when asked for them.
