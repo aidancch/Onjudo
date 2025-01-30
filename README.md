@@ -1,6 +1,6 @@
 # Onjūdō
 
-![Alt text]([https://example.com/path/to/image.png](https://media.istockphoto.com/id/2149088667/photo/3d-rendering-of-modern-house-in-luxurious-style-in-night.jpg?s=612x612&w=0&k=20&c=GLKFpasm9kc8CgVZMh5oZB3oF5cYUC9fP8810sOJ5XQ=))
+![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
 
 ## Overview
 
