@@ -1,4 +1,4 @@
-# Onjūdō –– Your AI Real Estate Agent
+# Onjūdō: Your AI Real Estate Agent
 
 ![Onjudo Header Logo](https://github.com/aidancch/Onjudo/blob/main/onjudo_header_logo.png)
 
