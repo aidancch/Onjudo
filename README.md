@@ -28,22 +28,24 @@ Onjūdō is a website that helps people easily find their dream homes. Users can
 
 ## Inspiration
 
-Searching for homes online by navigating sites like Zillow can become very tedious and challenging for the elderly or vision impaired. The goal of this project is to create an experience that is the same as talking to a real estate agent while receiving listings in real-time based on user preferences.
+Searching for homes online by navigating sites like Zillow can become very tedious and challenging for the elderly or vision impaired. The goal of this project is to create an experience that is the same as talking to a real estate agent while receiving listings in real-time based on user preferences. The name, "Onjūdō," means peaceful home in Japanese.
 
 ## Goals
 
 - Provide real estate search features that aren't offered anywhere else.
-- Create a site that is accessible to anyone.
+- Create a site that is accessible and convenient for anyone who's looking for their dream house.
 
 ## Built With
 
 - Frontend
     - React
-    - Tailwind
-    - CSS
+    - TailwindCSS
+    - Shadcn
+    - TypeScript
 - Backend
-    - Flask
     - Python
+    - Flask
+    - SocketIO
 
 ## Challenges
 
@@ -52,7 +54,8 @@ Searching for homes online by navigating sites like Zillow can become very tedio
 
 ## Accomplishments
 
-1. As first years in our first hackathon, we didn't think we would get as far as we did and make something that looked nice.
+1. As first years in our first hackathon, we didn't think we would get as far as we did.
+2. Without much experience with front-end development, we are proud to be able to pull off the clean and readable interface with integration of many features like Google Maps API.
 
 ## What We Learned
 
@@ -66,4 +69,10 @@ Searching for homes online by navigating sites like Zillow can become very tedio
 
 ## How to run
 
-1. Pass
+```
+cd my-app/
+npm run dev
+python3 backend/app.py
+```
+
+We apologize for not utilizing containers like Docker to build the project with. We had limited time during our hackathon and proceeded without doing so (which we regretted as we had several compatability issues across devices). If you like this project and want to collaborate, please reach out to us! We would love Docker support, and a proper ```requirements.txt``` file.
