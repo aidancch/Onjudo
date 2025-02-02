@@ -1,7 +1,7 @@
 import cohere
 
 class ResponseAnalyzer:
-    cohere_api_key = "nz6fdh3FyK7sgrA25T17uyLTu33KNl16azQskw31"
+    cohere_api_key = "your api key"
     co = cohere.ClientV2(api_key=cohere_api_key)
     def __init__(self):
         self.prompt = None
